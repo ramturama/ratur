@@ -7,6 +7,6 @@ const TG = "ramturama";      // ник в телеграме без @
 // 2) допиши строку в список ниже (новые работы вверху или внизу — как хочешь)
 // 3) загрузи папку на хостинг заново
 const WORKS = [
-  { file: "https://github.com/user-attachments/assets/2d103e3d-109a-4a38-9a71-b97dca2cb529", title: "", cat: "", year: "2026" },
+  { file: "прт00_1.mp4", title: "", cat: "", year: "2026" },
   // { file: "videos/прт01.mp4", title: "", cat: "", year: "2026" },
 ];
