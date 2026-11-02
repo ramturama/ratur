@@ -8,5 +8,5 @@ const TG = "ramturama";      // ник в телеграме без @
 // 3) загрузи папку на хостинг заново
 const WORKS = [
   { file: "prt01.mp4", title: "", cat: "", year: "2026" },
-  { file: "https://ramturama.github.io/ratur/prt00.mp4", title: "", cat: "", year: "2026" },
+  { file: "prt00.mp4", title: "", cat: "", year: "2026" },
 ];
