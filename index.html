@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ratur — video editing</title>
+<style>
+:root{--bg:#ebe9e4;--fg:#111;--mu:#8a8780;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0c0c0c;--fg:#e8e6e1;--mu:#77746e}}
+:root[data-theme="dark"]{--bg:#0c0c0c;--fg:#e8e6e1;--mu:#77746e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 13px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.02em;-webkit-font-smoothing:antialiased}
+body::before,body::after{content:"";position:fixed;z-index:-1;pointer-events:none}
+body::before{inset:-10%;opacity:.5;animation:g 1.2s steps(1) infinite;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 -.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes g{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(-1%,2%)}}
+body::after{inset:0;opacity:.28;background:repeating-linear-gradient(180deg,var(--fg) 0 5px,transparent 5px 12px);-webkit-mask:linear-gradient(90deg,transparent calc(100% - 1px),#000 0) 0 0/25% 100%;mask:linear-gradient(90deg,transparent calc(100% - 1px),#000 0) 0 0/25% 100%}
+@media (prefers-reduced-motion:reduce){body::before{animation:none}}
+a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;letter-spacing:inherit}
+header,footer{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(16px,4vw,48px);text-transform:uppercase;font-size:11px}
+.st{display:flex;gap:5px;align-items:center}.st i{width:9px;height:1px;background:var(--fg)}
+.hero{padding:clamp(48px,14vh,160px) clamp(16px,4vw,48px) clamp(32px,8vh,96px)}
+h1{margin:0;font-weight:500;font-size:clamp(64px,19vw,260px);line-height:.82;letter-spacing:-.06em;text-transform:lowercase}
+.sub{display:flex;justify-content:space-between;margin-top:28px;color:var(--mu);text-transform:uppercase;font-size:11px;gap:16px}
+.n{width:22px;height:22px;border:1px solid var(--fg);border-radius:50%;display:inline-grid;place-items:center;font-size:10px;flex:none}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(24px,4vw,56px) clamp(16px,3vw,40px);padding:0 clamp(16px,4vw,48px) 80px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.c{cursor:pointer}
+.im{aspect-ratio:16/10;overflow:hidden;background:#d8d5cf;border:1px solid var(--fg)}
+.im video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;filter:grayscale(1) contrast(1.1);transition:filter .5s,transform .8s}
+.c:hover video,.c:active video{filter:none;transform:scale(1.03)}
+.m{display:flex;gap:12px;align-items:center;margin-top:12px}
+.m b{font-weight:500;text-transform:uppercase;font-size:12px}.m i{margin-left:auto;font-style:normal;color:var(--mu);font-size:11px;text-transform:uppercase;text-align:right}
+.ph{cursor:default}.ph .im{background:none;border-style:dashed;display:grid;place-items:center;color:var(--mu);text-transform:uppercase;font-size:11px}
+.mo{position:fixed;inset:0;z-index:9;background:var(--bg);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(env(safe-area-inset-bottom,0px) + 14px)}
+.mo .top{display:flex;justify-content:space-between;align-items:center;text-transform:uppercase;font-size:11px;padding-bottom:12px}
+.mo video{flex:1;min-height:0;width:100%;background:#000;border:1px solid var(--fg)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="works.js"></script>
+<script>
+const L={
+ru:{role:'монтаж видео',w:'работы',soon:'скоро',tg:'телеграм',close:'закрыть'},
+en:{role:'video editing',w:'works',soon:'soon',tg:'telegram',close:'close'}
+};
+let lang='ru';
+try{lang=(navigator.language||'').startsWith('ru')?'ru':'en';const s=localStorage.getItem('l');if(s)lang=s}catch(e){}
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.title=NAME+' — video editing';
+function render(){
+ const T=L[lang];document.documentElement.lang=lang;
+ const cards=WORKS.map((w,i)=>`<article class="c" data-o="${i}"><div class="im"><video src="${esc(w.file)}#t=1" preload="metadata" muted playsinline></video></div><div class="m"><span class="n">${i+1}</span><b>${esc(w.title)}</b><i>${esc(w.cat)}${w.year?' · '+esc(w.year):''}</i></div></article>`).join('');
+ const ph=WORKS.length?'':[1,2].map(n=>`<article class="c ph"><div class="im">${T.soon}</div><div class="m"><span class="n">${n}</span><b>—</b></div></article>`).join('');
+ document.getElementById('app').innerHTML=`
+ <header><span class="st"><i></i><i></i><i></i><i></i></span><span>${T.role}</span><button data-l>${lang==='ru'?'EN':'RU'}</button></header>
+ <section class="hero"><h1>${esc(NAME)}</h1><div class="sub"><span>${T.role}</span><span>(${WORKS.length}) ${T.w}</span></div></section>
+ <main class="grid">${cards}${ph}</main>
+ <footer><span>${esc(NAME)} ©</span>${TG?`<a href="https://t.me/${esc(TG)}" target="_blank" rel="noopener">${T.tg} ↗</a>`:'<span></span>'}</footer>`;
+}
+function open(i){
+ const w=WORKS[i],m=document.createElement('div');m.className='mo';
+ m.innerHTML=`<div class="top"><span>${esc(w.title)}</span><button data-k>${L[lang].close} ×</button></div><video src="${esc(w.file)}" controls autoplay playsinline></video>`;
+ document.getElementById('app').appendChild(m);document.body.style.overflow='hidden';
+}
+function shut(){const m=document.querySelector('.mo');if(m){m.remove();document.body.style.overflow=''}}
+addEventListener('keydown',e=>{if(e.key==='Escape')shut()});
+document.addEventListener('click',e=>{
+ const t=e.target;
+ if(t.closest('[data-l]')){lang=lang==='ru'?'en':'ru';try{localStorage.setItem('l',lang)}catch(x){}return render()}
+ if(t.closest('[data-k]'))return shut();
+ const c=t.closest('[data-o]');if(c)open(+c.dataset.o);
+});
+render();
+</script>
+</body>
+</html>
