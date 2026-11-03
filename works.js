@@ -9,4 +9,5 @@ const TG = "ramturama";      // ник в телеграме без @
 const WORKS = [
   { file: "prt01.mp4", title: "", cat: "", year: "2026" },
   { file: "prt00.mp4", title: "", cat: "", year: "2026" },
+  { file: "prt02.mp4", title: "", cat: "", year: "2026" },
 ];
